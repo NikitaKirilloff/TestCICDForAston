@@ -16,35 +16,27 @@ stages {
 
     stage('Deploy') {
         environment {
-            REMOTE_HOST = 'http://212.22.70.140:8085/'
-            REMOTE_USER = 'tomcat'
-            REMOTE_PATH = '/path/to/tomcat/webapps/'
-            WAR_FILE = 'target/TestCICDAston-1.0-SNAPSHOT.war'
-        }
+            TOMCAT_CREDS=credentials('pi-ssh-key')
+            TOMCAT_SERVER="212.22.70.140"
+            ROOT_WAR_LOCATION="/opt/tomcat/webapps/"
+            LOCAL_WAR_DIR="/target"
+            WAR_FILE="test.war"
+          }
 
         steps {
-             sh "ssh ${REMOTE_USER}@${REMOTE_HOST} \"${TOMCAT_HOME}/bin/shutdown.sh\""
-
-             sh "ssh ${REMOTE_USER}@${REMOTE_HOST} \"rm -rf ${REMOTE_PATH}TestCICDAston-1.0-SNAPSHOT*\""
-
-             sh "scp ${LOCAL_FILE} ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
-
-              sh "ssh ${REMOTE_USER}@${REMOTE_HOST} \"${TOMCAT_HOME}/bin/startup.sh\""
-        }
-    }
-
-    stage('Verify') {
-        steps {
-            sh "sleep 30"
-
-            sh "curl -s http://localhost:8085/TestCICDAston-1.0-SNAPSHOT/"
-        }
+                sh '''
+                  ssh -i $TOMCAT_CREDS $TOMCAT_CREDS_USR@$TOMCAT_SERVER "/opt/tomcat/bin/catalina.sh stop"
+                  ssh -i $TOMCAT_CREDS $TOMCAT_CREDS_USR@$TOMCAT_SERVER "rm -rf $ROOT_WAR_LOCATION/test; rm -f $ROOT_WAR_LOCATION/test.war"
+                  scp -i $TOMCAT_CREDS $LOCAL_WAR_DIR/$WAR_FILE $TOMCAT_CREDS_USR@$TOMCAT_SERVER:$ROOT_WAR_LOCATION/test.war
+                  ssh -i $TOMCAT_CREDS $TOMCAT_CREDS_USR@$TOMCAT_SERVER "chown $TOMCAT_CREDS_USR:$TOMCAT_CREDS_USR $ROOT_WAR_LOCATION/test.war"
+                  ssh -i $TOMCAT_CREDS $TOMCAT_CREDS_USR@$TOMCAT_SERVER "/opt/tomcat/bin/catalina.sh start"
+                '''
+              }
     }
 }
 
 post {
     always {
-        // Cleanup any leftover files after deployment
         sh "rm -rf ${WAR_FILE}"
     }
 }
