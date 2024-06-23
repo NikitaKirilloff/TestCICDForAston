@@ -4,7 +4,7 @@ agent any
 environment {
     TOMCAT_SERVER="212.22.70.140"
     ROOT_WAR_LOCATION="/opt/tomcat/webapps/"
-    LOCAL_WAR_DIR="/target"
+    LOCAL_WAR_DIR="/workspace/Test/target/"
     WAR_FILE="test.war"
 }
 stages {
