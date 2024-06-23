@@ -30,7 +30,7 @@ stages {
                         ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 'sudo -u tomcat export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 && /opt/tomcat/bin/catalina.sh start'
                     '''
                 }
-            }
+        }
 
 post {
     always {
