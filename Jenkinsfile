@@ -27,7 +27,7 @@ pipeline {
                    // Остановка Tomcat
                    sh "ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 sudo -u tomcat /opt/tomcat/bin/catalina.sh stop"
 
-                   // Удаление старых файлов приложения
+                   // Удаление старых файлов приложени
                    sh "ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 'sudo rm -rf /opt/tomcat/webapps/test; sudo rm -f /opt/tomcat/webapps/test.war'"
 
                    // Копирование нового war файла
