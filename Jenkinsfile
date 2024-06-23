@@ -43,9 +43,5 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            sh "rm -rf ${LOCAL_WAR_DIR}/${WAR_FILE}"
-        }
-    }
+
 }
