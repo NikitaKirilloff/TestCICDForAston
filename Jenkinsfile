@@ -4,7 +4,7 @@ pipeline {
     environment {
         TOMCAT_SERVER="212.22.70.140"
         ROOT_WAR_LOCATION="/opt/tomcat/webapps/"
-        LOCAL_WAR_DIR="/var/lib/jenkins/workspace/Test/target"
+        LOCAL_WAR_DIR="/var/lib/jenkins/workspace/Test2/target"
         WAR_FILE="test.war"
     }
 
