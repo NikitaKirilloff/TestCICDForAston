@@ -31,7 +31,7 @@ pipeline {
                    sh "ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 'sudo rm -rf /opt/tomcat/webapps/test; sudo rm -f /opt/tomcat/webapps/test.war'"
 
                    // Копирование нового war файла
-                   sh "scp -i /var/lib/jenkins/.ssh/id_rsa /var/lib/jenkins/workspace/Test/target/test.war ubuntu@212.22.70.140:/opt/tomcat/webapps/test.war"
+                   sh "scp -i /var/lib/jenkins/.ssh/id_rsa /var/lib/jenkins/workspace/Test2/target/test.war ubuntu@212.22.70.140:/opt/tomcat/webapps/test.war"
 
                    // Установка владельца для war файла
                    sh "ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 sudo chown tomcat:tomcat /opt/tomcat/webapps/test.war"
