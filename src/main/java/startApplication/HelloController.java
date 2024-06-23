@@ -8,10 +8,10 @@ public class HelloController {
 
   @GetMapping("/")
   public String hello() {
-    return "Hello World 10";
+    return "Hello World 11";
   }
   @GetMapping("/hello")
   public String hello1() {
-    return "Hello World 10";
+    return "Hello World 11";
   }
 }
