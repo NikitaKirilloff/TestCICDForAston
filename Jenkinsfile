@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                   ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 'sudo -u tomcat /opt/tomcat/bin/catalina.sh stop'
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 'sudo -u tomcat export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 && /opt/tomcat/bin/catalina.sh stop'
                     ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 "rm -rf /opt/tomcat/webapps/test; rm -f /opt/tomcat/webapps/test.war"
                     scp -i /var/lib/jenkins/.ssh/id_rsa /var/lib/jenkins/workspace/Test/target/test.war ubuntu@212.22.70.140:/opt/tomcat/webapps/test.war
                     ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@212.22.70.140 'sudo chown tomcat:tomcat /opt/tomcat/webapps/test.war'
